@@ -1,4 +1,4 @@
-# Blogspace
+# nodejs-beginners-guide
 
 a beginner's guide to NodeJS, disguised as a blog backend.
 
