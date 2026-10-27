@@ -21,7 +21,16 @@ the frontend is in the repo too, but ignore it. this guide is only about `backen
 
 you only need to read basic JavaScript. that's it.
 
-this was a live site once, so the secrets and settings aren't in the repo. it needs a MongoDB connection and a `.env` file to run, and this guide doesn't cover them. think of it as a read-through, not a run-through.
+this is a simple blogging site, and it works. people can sign up, log in, write blogs and comment on each other's posts. it was a live site once. all it needs is a MongoDB database, plus a `.env` file with your own settings and keys. this was a live site once, so the secrets and settings aren't in the repo, so set them up before you run it.
+
+reading it works fine without any of that.
+
+the `.env` goes in `backend/`:
+
+    MONGODB_URI=       your MongoDB connection string
+    APP_HOST=          where the server runs, like localhost
+    APP_PORT=          the port, like 3000
+    JWT_SECRET_KEY=    any long random text. signs the login tokens
 
 ## The map
 
