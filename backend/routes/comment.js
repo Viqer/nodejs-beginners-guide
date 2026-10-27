@@ -1,3 +1,13 @@
+/*
+✿ routes/comment.js ✿
+the comment URLs
+
+if you're having difficulty understanding this structure,
+refer to ./auth.js or ./user.js. it explains how a route works.
+
+read next: middleware/
+*/
+
 const express = require('express');
 const {
   createComment,

@@ -1,3 +1,13 @@
+/*
+✿ controllers/userControllers.js ✿
+the kitchen for users
+
+if you're having difficulty understanding this structure,
+refer to ./blogControllers.js. same recipe, different model.
+
+read next: that's the end of the tour. try the exercises in the README.
+*/
+
 const User = require('../models/Users');
 const validator = require('validator');
 
