@@ -144,4 +144,4 @@ this is a learning project, not production code. don't ship it as is. read it, b
 
 built by Viqer and Nekimo
 
-Find my friend nekimo at neki.moe
+Find my friend nekimo at [neki.moe](https://neki.moe)
