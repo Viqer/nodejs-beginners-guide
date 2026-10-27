@@ -1,148 +1,103 @@
 # Blogspace
 
-Blogspace is a full-stack blogging application built with the **MERN stack** (MongoDB, Express, React, Node.js). Users can register, log in, publish blog posts, and comment on posts from other users through a responsive web interface.
+a beginner's guide to NodeJS, disguised as a blog backend.
 
-The project demonstrates core full-stack concepts — RESTful API design, JWT-based authentication, client–server communication, MongoDB data modelling, and state management in React — while keeping a clean structure suitable for learning modern web development.
+the idea is simple. every folder does one job, every file has comments that say what that job is, and you read it in order. no magic, no 40 layers of abstraction. if you can follow a request from the browser to the database and back, you understand how most Node apps work.
 
-## Features
+works if you're new to Node. also works if you've been pasting LLM code and want to finally know what it's doing. you'll spot bad code way faster once you know where each piece belongs.
 
-- **User accounts** — registration and login with hashed passwords (bcrypt) and JWT session tokens.
-- **Blog posts** — create, view, and delete posts. Each post has a title, content, optional image, rating, and comment count.
-- **Comments** — authenticated users can comment on any post; comments are public to read.
-- **User profiles** — view and update the current user's profile via a dedicated `/profile` page.
-- **Role support** — users have a `user` or `admin` role, with admins able to bypass the frontend-only request guard on user routes.
-- **Email 2FA (scaffolded)** — two-factor auth via Nodemailer is wired into the backend but currently **disabled** by default.
+the frontend is in the repo too, but ignore it. this guide is only about `backend/`.
 
-## Tech stack
+## What you'll learn
 
-**Frontend**
-- React 19 with Create React App (`react-scripts`)
-- React Router 7 for client-side routing
+- how a Node server starts and listens
+- how a request travels through an app
+- why code gets split into routes, controllers, models and middleware
+- how to connect to a database
+- how login, tokens and 2FA fit in
 
-**Backend**
-- Node.js + Express 5
-- MongoDB with Mongoose 8
-- `jsonwebtoken` for JWT auth, `bcryptjs` for password hashing
-- `nodemailer` for email (2FA), `validator`, `cors`, `dotenv`
+## Requirements
 
-## Project structure
+[Node.js](https://nodejs.org) (LTS)<br>
+[Git](https://git-scm.com)<br>
+[fill in: database, e.g. MongoDB]
 
-```
-Blogspace/
-├── backend/
-│   ├── config/database.js        # MongoDB connection
-│   ├── controllers/              # blog, comment, user controllers
-│   ├── middleware/               # auth (JWT), encrypt, 2fa
-│   ├── models/                   # Users, Blogs, Comments schemas
-│   ├── routes/                   # auth, blog, comment, user routes
-│   └── server.js                 # Express entry point
-└── frontend/
-    └── src/
-        ├── components/
-        │   ├── auth/             # LoginPopup, Profile, ProfileSidebar
-        │   ├── blogs/            # BlogDetail, CreateBlog
-        │   └── forum/            # HomePage, BlogsForum, Navbar
-        └── App.js                # Routes
-```
+## Run it
 
-## Getting started
-
-### Prerequisites
-- Node.js (18+ recommended)
-- A MongoDB database (local instance or MongoDB Atlas connection string)
-
-### 1. Clone the repository
 ```bash
 git clone https://github.com/Viqer/Blogspace.git
-cd Blogspace
-```
-
-### 2. Backend setup
-```bash
-cd backend
+cd Blogspace/backend
 npm install
+node server.js
 ```
 
-Create a `.env` file in `backend/`:
-```env
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET_KEY=your_jwt_secret
-APP_HOST=localhost
-APP_PORT=3000
+[fill in: .env variables, if any. check `config/database.js` for what it needs]
 
-# Only needed if you re-enable email 2FA
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_app_password
+if it crashes on start, it's almost always the database connection. start with `config/database.js`.
+
+## The map
+
+```
+backend/
+  server.js          starts the app. read this first
+  config/
+    database.js      connects to the database
+  routes/            match a URL to a controller
+    index.js         puts all the routes in one place
+    auth.js          login and signup URLs
+    blog.js          blog URLs
+    comment.js       comment URLs
+    user.js          user URLs
+  middleware/        runs before the controller does
+    auth.js          checks who is making the request
+    2fa.js           the second login check
+    encrypt.js       protects sensitive stuff
+  controllers/       the actual logic
+    blogControllers.js
+    commentControllers.js
+    userControllers.js
+  models/            the shape of your data
+    Blogs.js
+    Comments.js
+    Users.js
 ```
 
-Start the server:
-```bash
-npm run dev     # with nodemon (auto-reload)
-# or
-npm start       # plain node
-```
-The API runs at `http://localhost:3000`.
+## How a request travels
 
-### 3. Frontend setup
-```bash
-cd ../frontend
-npm install
+```
+request -> server.js -> routes -> middleware -> controller -> model -> database
+                                                     |
+response <-------------------------------------------+
 ```
 
-Create a `.env` file in `frontend/`:
-```env
-REACT_APP_BASE_URL=http://localhost:3000
-PORT=3001
-```
-> The backend's CORS policy expects the frontend on port **3001**, so `PORT=3001` avoids a clash with the backend on 3000.
+think of it like a restaurant. routes are the host who sends you to a table. middleware is the bouncer checking your ID. the controller is the kitchen. the model is the recipe book. the database is the fridge.
 
-Start the app:
-```bash
-npm start
-```
-The app runs at `http://localhost:3001`.
+## Reading order
 
-## API reference
+1. `server.js`
+2. `config/database.js`
+3. `models/`
+4. `routes/`
+5. `middleware/`
+6. `controllers/`
 
-Base URL: `http://localhost:3000`
+data first, then the flow around it. it's easier that way, trust me.
 
-### Auth — `/auth`
-| Method | Endpoint | Auth | Description |
-| ------ | -------- | ---- | ----------- |
-| POST | `/auth/register` | — | Register with `username`, `email`, `password` |
-| POST | `/auth/login` | — | Log in with `username`, `password`; returns a JWT |
-| POST | `/auth/verify-2fa` | — | 2FA verification (currently disabled) |
+## Every file has comments
 
-### Blogs — `/blogs`
-| Method | Endpoint | Auth | Description |
-| ------ | -------- | ---- | ----------- |
-| GET | `/blogs` | — | List all blog posts |
-| GET | `/blogs/:id` | — | Get a single post |
-| POST | `/blogs` | yes | Create a post |
-| DELETE | `/blogs/:id` | yes | Delete a post |
+open any file and the top tells you three things: what it does, what calls it, and what it calls. the code underneath is commented in plain english. if a comment feels too obvious, good. that's the point.
 
-### Comments — `/comments`
-| Method | Endpoint | Auth | Description |
-| ------ | -------- | ---- | ----------- |
-| GET | `/comments/:blogId` | — | List comments for a post |
-| POST | `/comments` | yes | Add a comment |
-| DELETE | `/comments/:id` | yes | Delete a comment |
+## Try it yourself
 
-### Users — `/users`
-| Method | Endpoint | Auth | Description |
-| ------ | -------- | ---- | ----------- |
-| POST | `/users` | — | Create a user |
-| GET | `/users` | yes | List users |
-| GET | `/users/me` | yes | Get the current user's profile |
-| PUT | `/users/me` | yes | Update the current user's profile |
-| GET | `/users/:id` | yes | Get a user by id |
-| PUT | `/users/:id` | yes | Update a user |
-| DELETE | `/users/:id` | yes | Delete a user |
+stuff to break on purpose:
 
-> Authenticated routes expect an `Authorization: Bearer <token>` header. Most `/users` routes also require an `X-Requested-By: frontend` header (admins are exempt).
+- add a route that returns "hello"
+- add a new field to the Blogs model
+- write a middleware that logs every request
+- turn off auth on one route and see what happens
 
-## Author
+## Notes
 
-Rishit Gupta and Udit Tatu
+this is a learning project, not production code. don't ship it as is. read it, break it, then build your own.
 
-The Shenanigans are unreal
+built by Viqer.
