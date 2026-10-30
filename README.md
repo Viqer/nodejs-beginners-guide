@@ -1,29 +1,29 @@
-# nodejs-beginners-guide
+# Blogspace
 
-a beginner's guide to NodeJS, disguised as a blog backend.
+a NodeJS backend template. it shows how a backend works and gives you something to build on.
 
-the idea is simple. every folder does one job, every file has comments that say what that job is, and you read it in order. no magic, no 40 layers of abstraction. if you can follow a request from the browser to the database and back, you understand how most Node apps work.
+this is a small blogging site: people sign up, log in, write blogs and comment. strip out the blog parts and what's left is the skeleton almost every backend has. a server, a database, login, and a clean place for each kind of code.
 
-works if you're new to Node. also works if you've been pasting LLM code and want to finally know what it's doing. you'll spot bad code way faster once you know where each piece belongs.
+every file has comments that explain what it does. start from this, swap in your own idea, and you're not staring at a blank folder.
 
-the frontend is in the repo too, but ignore it. this guide is only about `backend/`.
+good if you're new to Node, or if you've been pasting LLM code and want to know where each piece belongs.
 
-## What you'll learn
+the frontend is in the repo too, but ignore it. this is only about `backend/`.
 
-- how a Node server starts and listens
-- how a request travels through an app
-- why code gets split into routes, controllers, models and middleware
-- how to connect to a database
-- how login, tokens and password hashing work
-- how to read code you didn't write
+## What you get
+
+- a server that starts and listens
+- a MongoDB connection
+- signup and login with hashed passwords and tokens
+- routes, controllers and models, each in its own folder
+- middleware that guards routes
+- comments in every file
 
 ## Before you start
 
-you only need to read basic JavaScript. that's it.
+you only need to read basic JavaScript.
 
-this is a simple blogging site, and it works. people can sign up, log in, write blogs and comment on each other's posts. it was a live site once. all it needs is a MongoDB database, plus a `.env` file with your own settings and keys. this was a live site once, so the secrets and settings aren't in the repo, so set them up before you run it.
-
-reading it works fine without any of that.
+it works. all it needs is a MongoDB database and a `.env` file with your own settings and keys. those aren't in the repo, so set them up before you run it.
 
 the `.env` goes in `backend/`:
 
@@ -31,6 +31,18 @@ the `.env` goes in `backend/`:
     APP_HOST=          where the server runs, like localhost
     APP_PORT=          the port, like 3000
     JWT_SECRET_KEY=    any long random text. signs the login tokens
+
+then:
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+`npm run dev` restarts the server every time you save.
+
+node runs your JavaScript outside the browser. express is a library that makes building a server with node much easier. this project uses both, plus MongoDB for the data.
 
 ## The map
 
@@ -69,7 +81,7 @@ dotenv         loads settings from a .env file
 bcryptjs       hashes passwords
 jsonwebtoken   makes and checks login tokens
 nodemailer     sends emails (used by 2fa)
-nodemon        restarts the server when you save (npm run dev)
+nodemon        restarts the server when you save
 ```
 
 ## How a request travels
@@ -82,7 +94,7 @@ response <-------------------------------------------+
 
 think of it like a restaurant. routes are the host who sends you to a table. middleware is the bouncer checking your ID. the controller is the kitchen. the model is the recipe book. the database is the fridge.
 
-here's one real trip, `GET /users/me`:
+For an example how the HTTP request `GET /users/me` actually work:
 
 ```
 server.js            gets the request, passes it on
@@ -104,6 +116,20 @@ response             the user goes back as JSON
 anything else  404
 ```
 
+## Make it yours
+
+say you want a new thing in your app, like "projects". the recipe is always the same:
+
+1. `models/Projects.js`: copy `Blogs.js`, change the fields
+2. `controllers/projectControllers.js`: copy `blogControllers.js`, swap in your model
+3. `routes/project.js`: copy a route file and point it at your controller
+4. `routes/index.js`: add `routes.use('/projects', projectRoutes)`
+5. guard it: add `authenticateToken` to the routes that need a login
+
+that's it. once you've done it once, you've done it for every feature you'll ever add.
+
+to remove the blog parts, delete the blog and comment files in each folder and the lines for them in `routes/index.js`.
+
 ## Reading order
 
 1. `server.js`
@@ -117,13 +143,11 @@ data first, then the flow around it. it's easier that way, trust me.
 
 ## Every file has comments
 
-every file starts with a ✿ header that tells you what it does, what calls it, what it calls, and what to read next. the code underneath is commented in plain english. if a comment feels too obvious, good. that's the point.
+every file starts with a ✿ header that tells you what it does, what calls it, what it calls, and what to read next. the code underneath is commented in plain english.
 
 some files are fully commented and some just point you to a similar one. the models and controllers repeat the same pattern, so you only learn it once.
 
 ## Cheatsheet: status codes
-
-the ones you'll meet in the code.
 
 ```
 200  ok
@@ -137,19 +161,11 @@ the ones you'll meet in the code.
 505  http version not supported
 ```
 
-## Try it yourself
-
-stuff to break on purpose:
-
-- add a route in `routes/blog.js` that returns "hello"
-- add a new field to `Blogs.js`, then update `createBlog` so it saves it
-- write a middleware that logs every request, and add it in `server.js`
-- in `routes/user.js`, move `router.use(authenticateToken)` above the sign up route and see what changes
-- stretch: turn 2FA back on in the login route
-
 ## Notes
 
-this is a learning project, not production code. don't ship it as is. read it, break it, then build your own.
+2FA by email is in the code but switched off. it's there if you want to turn it on.
+
+this is a starting point, not finished production code. check the security and settings before you put anything real on it.
 
 built by Viqer and Nekimo
 
