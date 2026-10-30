@@ -1,5 +1,5 @@
 /*
-✿ controllers/userControllers.js ✿
+controllers/userControllers.js
 the kitchen for users
 
 if you're having difficulty understanding this structure,

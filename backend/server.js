@@ -1,5 +1,5 @@
 /*
-✿ server.js ✿
+server.js
 the front door of the whole backend
 
 job: start the app and listen for requests
@@ -9,7 +9,7 @@ read next: config/database.js
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 /*
 require() loads code from another package or file.
@@ -22,7 +22,7 @@ const { dbConnection } = require("./config/database")  // function that connects
 const allRoutes = require("./routes/index")            // every URL the app knows about
 
 
-// ✿ 2. create the app
+// 2. create the app
 
 /*
 app is the server.
@@ -31,7 +31,7 @@ everything below hangs off it.
 const app = express();
 
 
-// ✿ 3. middleware
+// 3. middleware
 
 /*
 app.use() adds middleware: code that runs on every request.
@@ -67,7 +67,7 @@ any code that reads process.env should run after this line.
 require('dotenv').config();
 
 
-// ✿ 4. settings from .env
+// 4. settings from .env
 
 /*
 env vars hold things that change between machines (port, host, secrets).
@@ -76,13 +76,13 @@ env vars hold things that change between machines (port, host, secrets).
 const { APP_HOST, APP_PORT = 3000 } = process.env;
 
 
-// ✿ 5. routes
+// 5. routes
 
 // hands every request to routes/index.js, which decides where it goes next
 app.use(allRoutes);
 
 
-// ✿ 6. start listening
+// 6. start listening
 
 /*
 app.listen(port, callback).

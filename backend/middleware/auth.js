@@ -1,5 +1,5 @@
 /*
-✿ middleware/auth.js ✿
+middleware/auth.js
 the bouncer
 
 job: read the login token, work out who sent it, and let them in
@@ -13,7 +13,7 @@ this file reads that header and checks the token.
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 /*
 loads .env right here, so this file has its own settings even if loaded early.
@@ -23,7 +23,7 @@ const jwt = require("jsonwebtoken");   // checks tokens
 const User = require("../models/Users");   // so we can look the user up in the database
 
 
-// ✿ 2. the middleware
+// 2. the middleware
 
 /*
 same shape as every middleware: (req, res, next)
@@ -94,7 +94,7 @@ async function authenticateToken(req, res, next) {
 }
 
 
-// ✿ 3. export
+// 3. export
 
 // wrapped in an object so it can be picked with { authenticateToken }
 module.exports = {

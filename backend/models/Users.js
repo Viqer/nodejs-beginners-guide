@@ -1,5 +1,5 @@
 /*
-✿ models/Users.js ✿
+models/Users.js
 the shape of a user
 
 job: describe what a user looks like in the database
@@ -9,7 +9,7 @@ read next: routes/
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 // mongoose talks to MongoDB for us
 const mongoose = require('mongoose');
@@ -21,7 +21,7 @@ const { use } = require('react');
 const { Schema } = mongoose;
 
 
-// ✿ 2. the schema
+// 2. the schema
 
 /*
 a schema is a blueprint.
@@ -64,7 +64,7 @@ const userSchema = new Schema({
 });
 
 
-// ✿ 3. export
+// 3. export
 
 /*
 mongoose.model(name, schema) turns the blueprint into something we can use

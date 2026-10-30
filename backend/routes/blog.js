@@ -1,5 +1,5 @@
 /*
-✿ routes/blog.js ✿
+routes/blog.js
 the blog URLs
 
 if you're having difficulty understanding this structure,

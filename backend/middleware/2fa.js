@@ -1,5 +1,5 @@
 /*
-✿ middleware/2fa.js ✿
+middleware/2fa.js
 the second login check, sent by email
 
 job: email a 6 digit code, then check it when the user types it back
@@ -13,13 +13,13 @@ send2FA runs first. if it calls next(), handler runs.
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const nodemailer = require('nodemailer');   // sends emails from node
 const crypto = require('crypto');           // built into node. not used in this file.
 
 
-// ✿ 2. where codes are kept
+// 2. where codes are kept
 
 /*
 a plain object, used like a notepad: twoFACodes["me@mail.com"] = { code, expires }
@@ -30,7 +30,7 @@ fine for learning. real apps use a database or Redis.
 const twoFACodes = {};
 
 
-// ✿ 3. the email sender
+// 3. the email sender
 
 /*
 a transporter is the thing that actually sends mail.
@@ -47,7 +47,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-// ✿ 4. send the code
+// 4. send the code
 
 /*
 middleware shape: (req, res, next)
@@ -90,7 +90,7 @@ async function send2FA(req, res, next) {
 }
 
 
-// ✿ 5. check the code
+// 5. check the code
 
 /*
 the user types the code from their email.
@@ -117,7 +117,7 @@ function verify2FA(req, res, next) {
 }
 
 
-// ✿ 6. export
+// 6. export
 
 // two functions in an object. other files pick the ones they need.
 module.exports = { send2FA, verify2FA };

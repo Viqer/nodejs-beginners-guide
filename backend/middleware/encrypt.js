@@ -1,5 +1,5 @@
 /*
-✿ middleware/encrypt.js ✿
+middleware/encrypt.js
 the password scrambler
 
 job: hash the password in req.body before it gets saved
@@ -14,12 +14,12 @@ at login, bcrypt.compare in routes/auth.js hashes the typed password and checks 
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const bcryptjs = require('bcryptjs');   // the same hashing tool auth.js uses
 
 
-// ✿ 2. admin version
+// 2. admin version
 
 /*
 async because hashing takes a moment.
@@ -50,7 +50,7 @@ const encryptAdminPassword = async (req, res, next) => {
 };
 
 
-// ✿ 3. user version
+// 3. user version
 
 /*
 the exact same steps as above, copy for copy.
@@ -70,7 +70,7 @@ const encryptUserPassword = async (req, res, next) => {
 };
 
 
-// ✿ 4. export
+// 4. export
 
 module.exports = { encryptAdminPassword, encryptUserPassword };
 

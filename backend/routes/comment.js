@@ -1,5 +1,5 @@
 /*
-✿ routes/comment.js ✿
+routes/comment.js
 the comment URLs
 
 if you're having difficulty understanding this structure,

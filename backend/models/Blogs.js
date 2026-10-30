@@ -1,5 +1,5 @@
 /*
-✿ models/Blogs.js ✿
+models/Blogs.js
 the shape of a blog
 
 if you're having difficulty understanding this structure,
@@ -11,13 +11,13 @@ read next: routes/
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 
-// ✿ 2. the schema
+// 2. the schema
 
 const blogSchema = new Schema({
   title: {
@@ -70,7 +70,7 @@ const blogSchema = new Schema({
 }, { timestamps: true });
 
 
-// ✿ 3. export
+// 3. export
 
 /*
 the model is stored in a collection called "blogs".

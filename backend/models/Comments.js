@@ -1,5 +1,5 @@
 /*
-✿ models/Comments.js ✿
+models/Comments.js
 the shape of a comment
 
 if you're having difficulty understanding this structure,

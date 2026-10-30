@@ -1,5 +1,5 @@
 /*
-✿ config/database.js ✿
+config/database.js
 connects the app to MongoDB
 
 job: open one connection to the database
@@ -9,7 +9,7 @@ read next: models/
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 /*
 mongoose is the middle person between our code and MongoDB.
@@ -18,7 +18,7 @@ it also lets us describe data with schemas (you'll see that in models/).
 const mongoose = require('mongoose');
 
 
-// ✿ 2. the connect function
+// 2. the connect function
 
 /*
 async means this function can wait on slow things, like a network call.
@@ -57,7 +57,7 @@ const dbConnection = async () => {
 };
 
 
-// ✿ 3. export
+// 3. export
 
 /*
 module.exports shares this function with other files.

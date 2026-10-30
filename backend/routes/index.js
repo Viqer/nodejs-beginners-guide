@@ -1,5 +1,5 @@
 /*
-✿ routes/index.js ✿
+routes/index.js
 the switchboard
 
 job: gather every route file and give each one a URL prefix
@@ -13,7 +13,7 @@ and catches anything that doesn't match.
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const express = require('express');
 const routes = express.Router();   // same mini app idea as in auth.js
@@ -25,7 +25,7 @@ const userRoutes = require('./user');
 const authRoutes = require('./auth');
 
 
-// ✿ 2. mounting
+// 2. mounting
 
 /*
 routes.use('/prefix', router) puts a whole route file behind a prefix.
@@ -40,7 +40,7 @@ routes.use('/users', userRoutes);
 routes.use('/auth', authRoutes);
 
 
-// ✿ 3. the 404 catcher
+// 3. the 404 catcher
 
 /*
 this sits below every route on purpose.
@@ -54,7 +54,7 @@ routes.use((req, res, next) => {
 });
 
 
-// ✿ 4. the error catcher
+// 4. the error catcher
 
 /*
 this one has four arguments: (err, req, res, next).
@@ -77,7 +77,7 @@ routes.use((err, req, res, next) => {
 });
 
 
-// ✿ 5. export
+// 5. export
 
 // server.js loads this as allRoutes
 module.exports = routes;

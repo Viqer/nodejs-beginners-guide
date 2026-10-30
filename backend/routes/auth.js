@@ -1,6 +1,6 @@
 /*
 
-✿ routes/auth.js ✿
+routes/auth.js
 login and signup
 
 this file is probably the hardest to understand since there is a whole lot of shennanigans
@@ -18,7 +18,7 @@ the full URL also depends on how routes/index.js mounts this file.
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const express = require('express');
 const router = express.Router();   // a mini app that only holds routes. we export it at the bottom.
@@ -33,7 +33,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 
-// ✿ 2. the secret
+// 2. the secret
 
 /*
 the secret signs every token. anyone with it can fake logins.
@@ -44,7 +44,7 @@ the fallback is only for local dev. set a real one in .env for anything public.
 const JWT_SECRET = process.env.JWT_SECRET_KEY || process.env.JWT_SECRET || 'dev_secret_key';
 
 
-// ✿ 3. login
+// 3. login
 
 /*
 POST /login
@@ -84,7 +84,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 
-// ✿ 4. register
+// 4. register
 
 /*
 POST /register
@@ -118,7 +118,7 @@ router.post('/register', async (req, res, next) => {
 });
 
 
-// ✿ 5. verify 2FA
+// 5. verify 2FA
 
 /*
 POST /verify-2fa
@@ -130,7 +130,7 @@ router.post('/verify-2fa', (req, res) => {
 });
 
 
-// ✿ 6. export
+// 6. export
 
 // server.js ends up using this through routes/index.js
 module.exports = router;

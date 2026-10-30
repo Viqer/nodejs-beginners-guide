@@ -1,5 +1,5 @@
 /*
-✿ controllers/blogControllers.js ✿
+controllers/blogControllers.js
 the kitchen for blogs
 
 job: do the actual work for each blog URL
@@ -19,7 +19,7 @@ commentControllers.js and userControllers.js follow the same pattern.
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const Blog = require('../models/Blogs');   // the blueprint. Blog.find, Blog.save and friends come from here.
 
@@ -33,7 +33,7 @@ route files pick them with: const { createBlog } = require('../controllers/blogC
 */
 
 
-// ✿ 2. create
+// 2. create
 
 // Create a new blog
 exports.createBlog = async (req, res) => {
@@ -57,7 +57,7 @@ exports.createBlog = async (req, res) => {
 };
 
 
-// ✿ 3. read all
+// 3. read all
 
 // Get all blogs
 exports.getBlogs = async (req, res) => {
@@ -75,7 +75,7 @@ exports.getBlogs = async (req, res) => {
 };
 
 
-// ✿ 4. read one
+// 4. read one
 
 // Get a single blog by ID
 exports.getBlogById = async (req, res) => {
@@ -90,7 +90,7 @@ exports.getBlogById = async (req, res) => {
 };
 
 
-// ✿ 5. delete
+// 5. delete
 
 // Delete a blog by ID
 exports.deleteBlog = async (req, res) => {

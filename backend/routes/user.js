@@ -1,5 +1,5 @@
 /*
-✿ routes/user.js ✿
+routes/user.js
 everything about users, after they've signed up
 
 assuming you went through auth.js, this should be a breeze for you.
@@ -15,7 +15,7 @@ read next: middleware/
 */
 
 
-// ✿ 1. imports
+// 1. imports
 
 const express = require('express');
 
@@ -42,7 +42,7 @@ const { authenticateToken } = require('../middleware/auth'); // Import the auth 
 const { encryptUserPassword } = require('../middleware/encrypt');
 
 
-// ✿ 2. our own middleware
+// 2. our own middleware
 
 /*
 frontendOnly is middleware written right here.
@@ -67,7 +67,7 @@ function frontendOnly(req, res, next) {
 }
 
 
-// ✿ 3. order of things
+// 3. order of things
 
 /*
 express reads this file top to bottom.
@@ -82,12 +82,12 @@ router.use(authenticateToken);   // router.use() = apply this to every route bel
 router.use(frontendOnly);
 
 
-// ✿ 4. get all users
+// 4. get all users
 
 router.get('/', getUsers);
 
 
-// ✿ 5. the current user (/me)
+// 5. the current user (/me)
 
 /*
 /me is "whoever is logged in".
@@ -126,7 +126,7 @@ router.put('/me', encryptUserPassword, async (req, res) => {
 });
 
 
-// ✿ 6. any user by id
+// 6. any user by id
 
 /*
 :id is a blank. /users/123 gives req.params.id = "123".
@@ -140,7 +140,7 @@ router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 
 
-// ✿ 7. export
+// 7. export
 
 module.exports = router;
 

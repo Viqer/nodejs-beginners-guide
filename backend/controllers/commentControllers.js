@@ -1,5 +1,5 @@
 /*
-✿ controllers/commentControllers.js ✿
+controllers/commentControllers.js
 the kitchen for comments
 
 if you're having difficulty understanding this structure,
