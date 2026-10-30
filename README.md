@@ -126,9 +126,9 @@ say you want a new thing in your app, like "projects". the recipe is always the 
 4. `routes/index.js`: add `routes.use('/projects', projectRoutes)`
 5. guard it: add `authenticateToken` to the routes that need a login
 
-that's it. once you've done it once, you've done it for every feature you'll ever add.
-
+that's it. once you've done it once, you can done for every feature you'll ever add.
 to remove the blog parts, delete the blog and comment files in each folder and the lines for them in `routes/index.js`.
+even if you're using LLMs to generate your backend server, having a clean template results in the AI to not give you slop code but rather something that is humanly readable, and debuggable if needed.
 
 ## Reading order
 
@@ -139,13 +139,13 @@ to remove the blog parts, delete the blog and comment files in each folder and t
 5. `middleware/` (`auth.js`, `encrypt.js`, then `2fa.js` as a bonus)
 6. `controllers/` (`blogControllers.js` first)
 
-data first, then the flow around it. it's easier that way, trust me.
+data first, then the flow around it.
 
 ## Every file has comments
 
-every file starts with a ✿ header that tells you what it does, what calls it, what it calls, and what to read next. the code underneath is commented in plain english.
+every file starts with a header that tells you what it does, what calls it, what it calls, and what to read next. the code underneath is commented in plain english.
 
-some files are fully commented and some just point you to a similar one. the models and controllers repeat the same pattern, so you only learn it once.
+some files are fully commented and some just point you to a similar one. the models and controllers repeat the same pattern, and have been only explained once (eg. controllers). read it and then try to see if you can understand it without the comments holding your hand in every file. 
 
 ## Cheatsheet: status codes
 
@@ -164,8 +164,7 @@ some files are fully commented and some just point you to a similar one. the mod
 ## Notes
 
 2FA by email is in the code but switched off. it's there if you want to turn it on.
-
-this is a starting point, not finished production code. check the security and settings before you put anything real on it.
+this is a starting point, not finished production code. check the security and settings before actually using it.
 
 built by Viqer and Nekimo
 
