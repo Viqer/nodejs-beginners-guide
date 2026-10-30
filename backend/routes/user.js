@@ -15,8 +15,6 @@ read next: middleware/
 */
 
 
-// 1. imports
-
 const express = require('express');
 
 /*
@@ -38,11 +36,9 @@ middleware = a function that runs before the route's own code.
 authenticateToken checks the login token and sets req.user.
 encryptUserPassword hashes the password in req.body before it goes any further.
 */
-const { authenticateToken } = require('../middleware/auth'); // Import the auth middleware
+const { authenticateToken } = require('../middleware/auth');
 const { encryptUserPassword } = require('../middleware/encrypt');
 
-
-// 2. our own middleware
 
 /*
 frontendOnly is middleware written right here.
@@ -50,7 +46,6 @@ it takes a third argument, next. calling next() means "ok, move on".
 not calling it and sending a response instead stops the request there.
 */
 function frontendOnly(req, res, next) {
-  // If user is admin, skip the X-Requested-By check
   if (req.user && req.user.isAdmin) {
     return next();
   }
@@ -67,8 +62,6 @@ function frontendOnly(req, res, next) {
 }
 
 
-// 3. order of things
-
 /*
 express reads this file top to bottom.
 a route only gets the middleware that sits above it.
@@ -77,31 +70,23 @@ the POST below sits above router.use(...), so anyone can call it.
 everything after router.use(authenticateToken) needs a valid token.
 authenticateToken goes before frontendOnly because frontendOnly reads req.user.
 */
-router.post('/', encryptUserPassword, createUser);   // hash the password first, then create the user
-router.use(authenticateToken);   // router.use() = apply this to every route below
+router.post('/', encryptUserPassword, createUser);
+router.use(authenticateToken);
 router.use(frontendOnly);
 
-
-// 4. get all users
-
 router.get('/', getUsers);
-
-
-// 5. the current user (/me)
 
 /*
 /me is "whoever is logged in".
 authenticateToken already worked out who that is and put it on req.user.
 */
 router.get('/me', async (req, res) => {
-  // try/catch: if anything fails, send an error back instead of crashing
   try {
-    // require() works inline too. same as the import at the top of auth.js.
-    const user = await require('../models/Users').findById(req.user._id);   // find one user by their id
-    if (!user) return res.status(404).json({ error: 'User not found' });   // 404 = not found
+    const user = await require('../models/Users').findById(req.user._id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
     res.json(user);
   } catch (err) {
-    res.status(500).json({ error: err.message });   // 500 = something broke on the server
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -121,12 +106,10 @@ router.put('/me', encryptUserPassword, async (req, res) => {
     if (!updatedUser) return res.status(404).json({ error: 'User not found' });
     res.json(updatedUser);
   } catch (err) {
-    res.status(400).json({ error: err.message });   // 400 = bad request, usually bad data
+    res.status(400).json({ error: err.message });
   }
 });
 
-
-// 6. any user by id
 
 /*
 :id is a blank. /users/123 gives req.params.id = "123".
@@ -139,8 +122,6 @@ router.get('/:id', getUserById);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 
-
-// 7. export
 
 module.exports = router;
 

@@ -9,20 +9,15 @@ read next: config/database.js
 */
 
 
-// 1. imports
-
 /*
 require() loads code from another package or file.
 curly braces pull one named thing out of what a file exports.
 */
-const express = require('express');   // the framework. gives us the app, routes and middleware
-const cors = require('cors');         // lets a frontend on another port talk to this server
+const express = require('express');
+const cors = require('cors');
 
-const { dbConnection } = require("./config/database")  // function that connects to MongoDB
-const allRoutes = require("./routes/index")            // every URL the app knows about
-
-
-// 2. create the app
+const { dbConnection } = require("./config/database")
+const allRoutes = require("./routes/index")
 
 /*
 app is the server.
@@ -30,8 +25,6 @@ everything below hangs off it.
 */
 const app = express();
 
-
-// 3. middleware
 
 /*
 app.use() adds middleware: code that runs on every request.
@@ -44,7 +37,7 @@ origin = who is allowed in.
 credentials = allow cookies and auth headers.
 */
 app.use(cors({
-  origin: 'http://localhost:3001', // Change this if your frontend runs on a different port
+  origin: 'http://localhost:3001',
   credentials: true
 }));
 
@@ -67,8 +60,6 @@ any code that reads process.env should run after this line.
 require('dotenv').config();
 
 
-// 4. settings from .env
-
 /*
 env vars hold things that change between machines (port, host, secrets).
 = 3000 is a fallback if APP_PORT is missing.
@@ -76,22 +67,16 @@ env vars hold things that change between machines (port, host, secrets).
 const { APP_HOST, APP_PORT = 3000 } = process.env;
 
 
-// 5. routes
-
-// hands every request to routes/index.js, which decides where it goes next
 app.use(allRoutes);
-
-
-// 6. start listening
 
 /*
 app.listen(port, callback).
 the callback runs once the server is up.
 */
 app.listen(APP_PORT, () => {
-  dbConnection()   // connect to the database only after the server is up
+  dbConnection()
   const serverUrl = `http://${APP_HOST}:${APP_PORT}`
-  const apiUrl = `${serverUrl}`   // same as serverUrl here
+  const apiUrl = `${serverUrl}`
   console.log(`\n\nServer URL ${serverUrl}`);
   console.log(`API URL ${apiUrl} \n\n`);
 });

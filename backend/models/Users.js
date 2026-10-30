@@ -9,19 +9,11 @@ read next: routes/
 */
 
 
-// 1. imports
-
-// mongoose talks to MongoDB for us
 const mongoose = require('mongoose');
 
-// not used anywhere in this file. safe to delete.
 const { use } = require('react');
 
-// Schema is the blueprint maker. we pull it out of mongoose to use it directly.
 const { Schema } = mongoose;
-
-
-// 2. the schema
 
 /*
 a schema is a blueprint.
@@ -30,9 +22,9 @@ mongoose checks new data against it before saving.
 */
 const userSchema = new Schema({
   username: {
-    type: String,     // what kind of value it holds
-    required: true,   // saving fails if it's missing
-    unique: true,     // no two users can share one
+    type: String,
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -49,8 +41,8 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],  // only these two values are allowed
-    default: 'user',          // used when no role is given
+    enum: ['user', 'admin'],
+    default: 'user',
   },
   createdAt: {
     type: Date,
@@ -63,8 +55,6 @@ const userSchema = new Schema({
   }
 });
 
-
-// 3. export
 
 /*
 mongoose.model(name, schema) turns the blueprint into something we can use

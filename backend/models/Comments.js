@@ -14,7 +14,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const commentSchema = new Schema({
-  // who wrote the comment. stores the user's id, linked to Users.js.
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -37,8 +36,8 @@ const commentSchema = new Schema({
   },
   rating: {
     type: Number,
-    default: 0,   // a new comment starts at 0
+    default: 0,
   },
-}, { timestamps: true });   // adds createdAt and updatedAt for us (see Blogs.js)
+}, { timestamps: true });
 
 module.exports = mongoose.model('Comment', commentSchema);

@@ -18,7 +18,6 @@ const {
 const { authenticateToken } = require('../middleware/auth');
 const router = express.Router();
 
-// Only authenticated users can create or delete blogs
 router.post('/', authenticateToken, createBlog);
 router.get('/', getBlogs);
 router.get('/:id', getBlogById);

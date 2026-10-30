@@ -14,12 +14,8 @@ at login, bcrypt.compare in routes/auth.js hashes the typed password and checks 
 */
 
 
-// 1. imports
+const bcryptjs = require('bcryptjs');
 
-const bcryptjs = require('bcryptjs');   // the same hashing tool auth.js uses
-
-
-// 2. admin version
 
 /*
 async because hashing takes a moment.
@@ -29,7 +25,6 @@ this one isn't used in routes/user.js.
 const encryptAdminPassword = async (req, res, next) => {
   try {
 
-    // only hash if a password was sent. a request that changes other fields won't have one.
     if (req.body.password) {
 
       /*
@@ -39,18 +34,15 @@ const encryptAdminPassword = async (req, res, next) => {
       */
       const salt = await bcryptjs.genSalt(10);
 
-      // swap the typed password in req.body for its hash
+
       req.body.password = await bcryptjs.hash(req.body.password, salt);
     }
-    next();   // done. on to the next step.
-
+    next();
   } catch (err) {
-    res.status(500).json({ error: 'Error encrypting password' });   // 500 = the server's problem
+    res.status(500).json({ error: 'Error encrypting password' });
   }
 };
 
-
-// 3. user version
 
 /*
 the exact same steps as above, copy for copy.
@@ -69,8 +61,6 @@ const encryptUserPassword = async (req, res, next) => {
   }
 };
 
-
-// 4. export
 
 module.exports = { encryptAdminPassword, encryptUserPassword };
 

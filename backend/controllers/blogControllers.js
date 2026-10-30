@@ -19,9 +19,7 @@ commentControllers.js and userControllers.js follow the same pattern.
 */
 
 
-// 1. imports
-
-const Blog = require('../models/Blogs');   // the blueprint. Blog.find, Blog.save and friends come from here.
+const Blog = require('../models/Blogs');
 
 
 /*
@@ -33,33 +31,26 @@ route files pick them with: const { createBlog } = require('../controllers/blogC
 */
 
 
-// 2. create
-
-// Create a new blog
 exports.createBlog = async (req, res) => {
   try {
-    const { title, content, image } = req.body;   // the data the client sent
+    const { title, content, image } = req.body;
 
     /*
     req.user was set by middleware/auth.js.
     that's how we know who is writing the blog.
     */
-    // Use authenticated user from token
     const userId = req.user && req.user._id;
     if (!userId) return res.status(401).json({ error: 'User not authenticated' });
 
-    const blog = new Blog({ title, content, user: userId, image });   // builds a blog in memory. not saved yet.
-    await blog.save();   // now it goes into MongoDB. mongoose checks it against the schema first.
-    res.status(201).json(blog);   // 201 = created
+    const blog = new Blog({ title, content, user: userId, image });
+    await blog.save();
+    res.status(201).json(blog);
   } catch (err) {
-    res.status(400).json({ error: err.message });   // 400 = bad data, like a missing title
+    res.status(400).json({ error: err.message });
   }
 };
 
 
-// 3. read all
-
-// Get all blogs
 exports.getBlogs = async (req, res) => {
   try {
     /*
@@ -70,19 +61,15 @@ exports.getBlogs = async (req, res) => {
     const blogs = await Blog.find().populate('user').sort({ createdAt: -1 });
     res.status(200).json(blogs);
   } catch (err) {
-    res.status(500).json({ error: err.message });   // reads only fail if the server or database does
+    res.status(500).json({ error: err.message });
   }
 };
 
 
-// 4. read one
-
-// Get a single blog by ID
 exports.getBlogById = async (req, res) => {
   try {
-    // req.params.id is the :id from the URL. /blogs/123 gives "123".
     const blog = await Blog.findById(req.params.id).populate('user');
-    if (!blog) return res.status(404).json({ error: 'Blog not found' });   // nothing matched
+    if (!blog) return res.status(404).json({ error: 'Blog not found' });
     res.status(200).json(blog);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -90,13 +77,10 @@ exports.getBlogById = async (req, res) => {
 };
 
 
-// 5. delete
-
-// Delete a blog by ID
 exports.deleteBlog = async (req, res) => {
   try {
-    const { id } = req.params;   // same as req.params.id, just pulled out first
-    const blog = await Blog.findByIdAndDelete(id);   // removes it and gives back what it removed, or null
+    const { id } = req.params;
+    const blog = await Blog.findByIdAndDelete(id);
     if (!blog) return res.status(404).json({ error: 'Blog not found' });
     res.status(200).json({ message: 'Blog deleted successfully' });
   } catch (err) {

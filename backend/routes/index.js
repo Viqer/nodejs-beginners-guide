@@ -13,19 +13,14 @@ and catches anything that doesn't match.
 */
 
 
-// 1. imports
-
 const express = require('express');
-const routes = express.Router();   // same mini app idea as in auth.js
+const routes = express.Router();
 
-// each of these is a router exported from its own file
 const blogRoutes = require('./blog');
 const commentRoutes = require('./comment');
 const userRoutes = require('./user');
 const authRoutes = require('./auth');
 
-
-// 2. mounting
 
 /*
 routes.use('/prefix', router) puts a whole route file behind a prefix.
@@ -40,21 +35,16 @@ routes.use('/users', userRoutes);
 routes.use('/auth', authRoutes);
 
 
-// 3. the 404 catcher
-
 /*
 this sits below every route on purpose.
 a request that matched nothing above falls all the way down to here.
 no path given, so it catches everything that reaches it.
 if it were placed first, it would answer every request with a 404.
 */
-// 404 handler for unmatched API routes
 routes.use((req, res, next) => {
   res.status(404).json({ error: 'Request not found' });
 });
 
-
-// 4. the error catcher
 
 /*
 this one has four arguments: (err, req, res, next).
@@ -67,7 +57,6 @@ that's why the async routes in auth.js work without try/catch.
 505 is rare. it's kept for the one case it's meant for.
 everything else becomes a plain 500.
 */
-// Error handling middleware for 500 and 505
 routes.use((err, req, res, next) => {
   if (err.status === 505) {
     res.status(505).json({ error: 'HTTP Version Not Supported' });
@@ -77,20 +66,4 @@ routes.use((err, req, res, next) => {
 });
 
 
-// 5. export
-
-// server.js loads this as allRoutes
 module.exports = routes;
-
-
-/*
-url map
-
-/auth/...      routes/auth.js
-/users/...     routes/user.js
-/blogs/...     routes/blog.js
-/comments/...  routes/comment.js
-anything else  404
-
-new status codes: 505 http version not supported
-*/

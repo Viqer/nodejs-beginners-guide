@@ -13,17 +13,13 @@ this file reads that header and checks the token.
 */
 
 
-// 1. imports
-
 /*
 loads .env right here, so this file has its own settings even if loaded early.
 */
 require("dotenv").config();
-const jwt = require("jsonwebtoken");   // checks tokens
-const User = require("../models/Users");   // so we can look the user up in the database
+const jwt = require("jsonwebtoken");
+const User = require("../models/Users");
 
-
-// 2. the middleware
 
 /*
 same shape as every middleware: (req, res, next)
@@ -31,7 +27,6 @@ next() = let them through. sending a response = stop here.
 */
 async function authenticateToken(req, res, next) {
 
-  // try/catch: anything that throws below lands in catch at the bottom
   try {
 
     /*
@@ -44,7 +39,6 @@ async function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    // no token, no entry. 401 = unauthorized.
     if (!token) {
       return res.status(401).json({ message: "No token provided." });
     }
@@ -56,13 +50,10 @@ async function authenticateToken(req, res, next) {
     if the token is bad, verify throws, and we jump to catch.
     on success it hands back what we stored inside at login: { id, username }.
     */
-    // Use id instead of _id for JWT payload
     const getTokenData = await jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    // read the id out of the token. || tries id first, then _id.
     const userId = getTokenData.id || getTokenData._id;
 
-    // 403 = forbidden. the token has no usable id inside.
     if (!userId) {
       return res.status(403).json({ message: "Invalid or expired token" });
     }
@@ -84,19 +75,15 @@ async function authenticateToken(req, res, next) {
     */
     req.user = isUserExist;
 
-    next();   // all checks passed. on to the next step.
+    next();
 
   } catch (error) {
-    // verify failing, or the database failing, ends up here
     console.error("Token verification error:", error);
     return res.status(500).json({ message: "Internal server error." });
   }
 }
 
 
-// 3. export
-
-// wrapped in an object so it can be picked with { authenticateToken }
 module.exports = {
   authenticateToken
 }

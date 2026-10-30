@@ -11,13 +11,9 @@ read next: routes/
 */
 
 
-// 1. imports
-
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-
-// 2. the schema
 
 const blogSchema = new Schema({
   title: {
@@ -44,11 +40,10 @@ const blogSchema = new Schema({
     required: true,
   },
   image: {
-    type: String, // URL or path to the image
-    required: false,   // optional. false is the default anyway, this just makes it clear.
+    type: String,
+    required: false,
   },
 
-  // counters. a new blog starts at 0.
   rating: {
     type: Number,
     default: 0,
@@ -69,8 +64,6 @@ const blogSchema = new Schema({
   */
 }, { timestamps: true });
 
-
-// 3. export
 
 /*
 the model is stored in a collection called "blogs".
